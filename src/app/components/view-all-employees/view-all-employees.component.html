@@ -1,0 +1,56 @@
+
+<div class="container">
+  
+  <div class="table">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        </mat-form-field>
+        <mat-table class="mat-elevation-z10" [dataSource]="dataSource" matSort>
+            <!-- <ng-container *ngFor="let cols of displayedColumns" matColumnDef="{{cols}}">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> {{cols}} </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element[cols]}} </mat-cell>
+            </ng-container> -->
+            <ng-container matColumnDef="_id">
+                <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header> User ID </mat-header-cell>
+                <mat-cell fxFlex="100px" *matCellDef="let employee"> {{employee._id}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="username">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> User Name </mat-header-cell>
+                <mat-cell *matCellDef="let employee"> {{employee.username}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="firstName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+                <mat-cell *matCellDef="let employee"> {{employee.firstName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="lastName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+                <mat-cell *matCellDef="let employee"> {{employee.lastName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="contact">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Contact </mat-header-cell>
+                <mat-cell *matCellDef="let employee"> {{employee.contact.cellphone}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="department">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Department </mat-header-cell>
+                <mat-cell *matCellDef="let employee"> {{employee.department.departmentName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="baseSalary">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Base Salary </mat-header-cell>
+                <mat-cell *matCellDef="let employee"> {{employee.salary.baseSalary}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="takeHomeSalary">
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Take Home Salary </mat-header-cell>
+                <mat-cell *matCellDef="let employee"> {{employee.salary.takeHomeSalary}} </mat-cell>
+            </ng-container>
+          
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row)"></mat-row>
+  
+            
+          </mat-table>
+            <mat-paginator class="mat-elevation-z10" [length]="5" [pageSize]="5" [pageSizeOptions]="[5, 10, 25]">
+          </mat-paginator>
+    </div>
+      
+</div>
+  

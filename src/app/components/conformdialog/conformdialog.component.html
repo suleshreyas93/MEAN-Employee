@@ -1,0 +1,19 @@
+<div>
+  <h2 mat-dialog-title>SAVE EMPLOYEE</h2>
+  <hr>
+  <mat-dialog-content>
+    <!-- {{data.firstName}} details will be inserted into database -->
+    <div class="alert alert-danger" *ngIf="data">
+        <h5>Please fill in the required details</h5>
+      
+      </div>
+    <br>
+    <br>
+    <!-- <strong>{{data}}</strong> -->
+  </mat-dialog-content>
+  <hr>
+  <mat-dialog-actions>
+    <button mat-raised-button (click)="onCloseConfirm(data)">CONFIRM</button>&nbsp;
+    <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+  </mat-dialog-actions>
+</div>

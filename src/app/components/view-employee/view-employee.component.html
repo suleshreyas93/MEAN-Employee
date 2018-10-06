@@ -1,0 +1,109 @@
+<div class="card mat-elevation-z8">
+  <div class="card-header">
+      <h5 class="my-card-header-title">VIEW {{employee.firstName | uppercase }} DETAILS</h5>
+  </div>
+  <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 base-salary">
+            <p>Base Salary</p>
+            <h5 class="gaps">USD: {{baseSalary}}</h5>
+        </div>
+        <div class="col-md-6 base-salary">
+            <p>Take Home Salary</p>
+            <h5 class="gaps">USD: {{takeHomeSalary}}</h5>
+        </div>
+      </div>
+      <hr>
+
+      <div class="row ">
+          <div class="col-md-12 base-salary">
+                <span><mat-icon>account_circle</mat-icon><h5 class="gaps">Personal Details</h5></span>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 base-salary">
+            <p>Username</p>
+            <h5 class="gaps">{{employee.username}}</h5>
+        </div>
+        <div class="col-md-4 base-salary">
+            <p>First Name</p>
+            <h5 class="gaps">{{employee.firstName}}</h5>
+        </div>
+        <div class="col-md-4 base-salary">
+            <p>Last Name</p>
+            <h5 class="gaps">{{employee.lastName}}</h5>
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-4 base-salary">
+            <p>Address</p>
+            <h5 class="gap-address">{{employee.address.street}} {{employee.address.apt}}</h5>
+            <h5 class="gap-address">{{employee.address.city}} {{employee.address.state}}</h5>
+            <h5 class="gap-address">{{employee.address.zipcode}}</h5>
+        </div>
+        <div class="col-md-4 base-salary">
+            <p>Cellphone</p>
+            <h5 class="gaps">{{employee.contact.cellphone}}</h5>
+        </div>
+        <div class="col-md-4 base-salary">
+            <p>Home Phone</p>
+            <h5 class="gaps">{{employee.contact.home}}</h5>
+        </div>
+        <!-- <div class="col-md-2 base-salary">
+            <p>State</p>
+            <h5>{{employee.address.state}}</h5>
+        </div>
+        <div class="col-md-2 base-salary">
+            <p>Zipcode</p>
+            <h5>{{employee.address.zipcode}}</h5>
+        </div> -->
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12 base-salary">
+            <h5 class="gaps">Employment Details</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 base-salary">
+            <p>Joining Date</p>
+            <h5 class="gaps">{{employee.joiningDate | date:'shortDate' }}</h5>
+        </div>
+        <div class="col-md-6 base-salary">
+            <p>Department</p>
+            <h5 class="gaps">{{employee.department.departmentName}}</h5>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12 base-salary">
+            <h5 class="gaps">Salary Details</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 base-salary">
+            <p>Deductions</p>
+            <ul class="base-salary">
+                <li *ngFor="let deduction of employee.salary.deductions">
+                    <p>Type: {{deduction.type}}   Rate: {{deduction.rate}}</p>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-4 base-salary">
+            <p>Tax Percent</p>
+            <h5 class="gaps">{{employee.salary.taxPercent}}</h5>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12 base-salary">
+                <button class="btn btn-primary mat-elevation-z8" (click)="callUpdate()">Edit Employee</button>
+        </div>
+      </div>
+            
+     
+    
+  </div>
+      
+</div>
+  

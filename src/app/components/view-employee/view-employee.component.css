@@ -1,0 +1,35 @@
+.card-header{
+    background: #5C6BC0;
+}
+
+/*.salary{
+
+    margin: auto;
+    justify-content: center;
+}*/
+
+.base-salary{
+    margin: auto; 
+    width: 50%;
+    text-align: center;
+
+    /* justify-content: space-around; */
+}
+
+.row-header{
+    margin:auto;
+    text-align: center;
+}
+
+ul li{
+    list-style-type: none;
+}
+
+.gaps{
+    line-height: 0.1
+}
+
+.gap-address{
+    line-height: 0.5;
+}
+

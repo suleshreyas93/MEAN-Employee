@@ -1,0 +1,252 @@
+
+<div class="card mat-elevation-z8">
+      <div class="card-header">
+        <h5 class="my-card-header-title">ADD EMPLOYEE DETAILS</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="addEmployee(employeeId,form)">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Personal data
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Enter Personal Details
+                      <mat-icon>account_circle</mat-icon>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <mat-form-field>
+                      <input 
+                        formControlName="username"
+                        matInput
+                        id="username" 
+                        type="email" 
+                        placeholder="Please Enter Your Email As The Username"
+                        (blur)="checkUsername(form.get('username'))">
+                        <div class="alert alert-danger" *ngIf="form.get('username').touched && form.get('username').invalid">
+                            <div *ngIf="form.get('username').errors.required">Username is required</div>
+                            <div *ngIf="form.get('username').errors.email">Username not valid</div>
+                        </div>
+                        <div class="alert alert-danger" *ngIf="usernameError">Username is already taken</div>
+                  </mat-form-field>
+                  
+  
+                  <mat-form-field>
+                    <input
+                      formControlName="firstName"
+                      matInput
+                      type="text" 
+                      placeholder="First name">
+                      <div class="alert alert-danger" *ngIf="form.get('firstName').touched && form.get('firstName').invalid">
+                          <div *ngIf="form.get('firstName').errors.required">Please Enter First Name</div>
+                      </div>
+                  </mat-form-field>
+                  
+              
+                  <mat-form-field>
+                    <input 
+                      formControlName="lastName"
+                      matInput 
+                      type="text" 
+                      placeholder="Last Name">
+                      <div class="alert alert-danger" *ngIf="form.get('lastName').touched && form.get('lastName').invalid">
+                          <div *ngIf="form.get('lastName').errors.required">Please Enter Last Name</div>
+                      </div>
+                  </mat-form-field>
+                  
+                  <br>
+  
+                  <mat-form-field>
+                     <input
+                      formControlName="street" 
+                      matInput 
+                      type="text" 
+                      placeholder="Street">
+                      <div class="alert alert-danger" *ngIf="form.get('street').touched && form.get('street').invalid">
+                          <div *ngIf="form.get('street').errors.required">Please Enter The Street</div>
+                      </div>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input
+                      formControlName="apt" 
+                      matInput 
+                      type="text" 
+                      placeholder="Apt.">
+                  </mat-form-field>
+  
+                  <mat-form-field>
+                    <input
+                      formControlName="city"
+                      matInput 
+                      type="text" 
+                      placeholder="City">
+                      <div class="alert alert-danger" *ngIf="form.get('city').touched && form.get('city').invalid">
+                          <div *ngIf="form.get('city').errors.required">Please Enter The City</div>
+                      </div>
+                  </mat-form-field>
+  
+                  <mat-form-field>
+                     <input 
+                     formControlName="state"
+                      matInput 
+                      type="text" 
+                      placeholder="State">
+                      <div class="alert alert-danger" *ngIf="form.get('state').touched && form.get('state').invalid">
+                          <div *ngIf="form.get('state').errors.required">Please Enter The State</div>
+                      </div>
+                  </mat-form-field>
+  
+                  <mat-form-field>
+                     <input
+                     formControlName="zipcode" 
+                      matInput 
+                      type="text" 
+                      placeholder="zipcode">
+                      <div class="alert alert-danger" *ngIf="form.get('zipcode').touched && form.get('zipcode').invalid">
+                          <div *ngIf="form.get('zipcode').errors.required">Please Enter The Zipcode</div>
+                      </div>
+                  </mat-form-field><br>
+  
+                  <mat-form-field>
+                      <input
+                        formControlName="cellphone"
+                        matInput 
+                        type="text" 
+                        placeholder="CellPhone Number">
+                  </mat-form-field>
+  
+                  <mat-form-field>
+                      <input 
+                        formControlName="homephone" 
+                        matInput 
+                        type="text" 
+                        placeholder="Home Number">
+                  </mat-form-field><br>
+  
+                  <mat-form-field>
+                      <mat-label>Date of Joining</mat-label>
+                      <input
+                        formControlName="joiningDate"  
+                        matInput 
+                        [matDatepicker]="picker" 
+                        placeholder="Choose a date" 
+                        (dateChange)="joiningDate($event)">
+                        <div class="alert alert-danger" *ngIf="form.get('joiningDate').touched && form.get('joiningDate').invalid">
+                            <div *ngIf="form.get('joiningDate').errors.required">Please Select The Joining Date</div>
+                        </div>
+                        
+                      <mat-datepicker-toggle matSuffix [for]="picker" required></mat-datepicker-toggle>
+                      <mat-datepicker #picker required></mat-datepicker>
+                      
+                  </mat-form-field>
+                  
+  
+              
+                  <mat-action-row>
+                    <button mat-button color="primary"  (click)="nextStep($event)">Next</button>
+                  </mat-action-row>
+                </mat-expansion-panel>
+              
+                <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Department Data
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Select Department
+                      <mat-icon>work</mat-icon>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+  
+                  <mat-form-field>
+                      
+                      <mat-select  
+                        formControlName="department"
+                        placeholder="Departments" 
+                        (change)="selectedDepartment($event.value)">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let dept of departments" [value]="dept">
+                          {{dept.departmentName}}
+                        </mat-option>
+                       </mat-select>
+                     
+                      <div class="alert alert-danger" *ngIf="form.get('department').touched && form.get('department').invalid">
+                          <div *ngIf="form.get('department').errors.required">Please select department</div>
+                      </div>
+                  </mat-form-field>
+              
+                  
+              
+                  <mat-action-row>
+                    <button mat-button color="warn" (click)="prevStep($event)">Previous</button>
+                    <button mat-button color="primary" (click)="nextStep($event)">Next</button>
+                  </mat-action-row>
+
+              </mat-expansion-panel>
+                <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle> 
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Salary Data
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Enter Salary Details
+                      <mat-icon>local_atm</mat-icon>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+  
+                  <mat-form-field>
+                    <input
+                      formControlName="baseSalary" 
+                      matInput 
+                      type="text" 
+                      placeholder="Base Salary"
+                      (blur)="homeSalary(form.get('baseSalary'), form.get('taxPercent'))">
+
+                      <div class="alert alert-danger" *ngIf="form.get('baseSalary').touched && form.get('baseSalary').invalid">
+                          <div *ngIf="form.get('baseSalary').errors.required">Please Enter Base Salary</div>
+                      </div>
+                  </mat-form-field>
+  
+                  <mat-form-field>
+                    <input
+                      formControlName="taxPercent"
+                      matInput 
+                      type="text" 
+                      placeholder="Tax Percent"
+                      value="20" 
+                      [readonly]="true">
+                  </mat-form-field><br>
+  
+                  <label>Deductions</label>
+                  <mat-selection-list 
+                    formControlName="deductions">
+                    <mat-list-option>Select All</mat-list-option><hr>
+                    <mat-list-option 
+                      *ngFor="let deduction of mydeductions" 
+                      [selected]="deduction.selected" 
+                      (click)="selectedDeductions(form.get('deductions'), form.get('baseSalary'), form.get('taxPercent'))" 
+                      [value]="deduction">
+                      {{deduction.type}}
+                    </mat-list-option>
+                    
+                  </mat-selection-list>
+                  
+                  <!-- <p>
+                    Options selected: {{deductions.selectedOptions.selected.length}}
+                  </p><br> -->
+                   <label>Take Home Salary : {{takeHomeSalary}}</label>
+              
+                  <mat-action-row>
+                    <button mat-button color="warn" (click)="prevStep($event)">Previous</button>
+                    <button mat-button color="primary"> End </button>
+                  </mat-action-row>
+            </mat-expansion-panel>
+        </mat-accordion>
+      </form>
+          
+      </div>
+</div>
+
+
