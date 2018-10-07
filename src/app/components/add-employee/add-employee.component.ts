@@ -6,7 +6,6 @@ import { Department } from './../../model/department.model';
 import { DepartmentService } from './../../services/department.service';
 import { EmployeeService } from './../../services/employee.service';
 import { Employee } from './../../model/employee.model';
-//import { UsernameValidators } from './username.validators';
 
 import { Component, OnInit } from '@angular/core';
 import { MatDialog }  from '@angular/material';
@@ -24,6 +23,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AddEmployeeComponent implements OnInit {
 
  
+  /**
+   * Reactive Form Template
+   */
   form = new FormGroup({
 
     username: new FormControl('',[
@@ -31,18 +33,18 @@ export class AddEmployeeComponent implements OnInit {
       Validators.email,
 
     ]),
-    firstName: new FormControl('',Validators.required),
-    lastName: new FormControl('',Validators.required),
-    street: new FormControl('',Validators.required),
+    firstName: new FormControl('',[Validators.required, Validators.pattern('^[a-zA-Z]*$'), Validators.minLength(3)]),
+    lastName: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]*$'),Validators.minLength(3)]),
+    street: new FormControl('',[Validators.required, Validators.minLength(3)]),
     apt: new FormControl(''),
-    city: new FormControl('',Validators.required),
-    state: new FormControl('',Validators.required),
-    zipcode: new FormControl('',Validators.required),
-    cellphone: new FormControl(''),
-    homephone: new FormControl(''),
+    city: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]*$'),Validators.minLength(3)]),
+    state: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]*$'),Validators.minLength(2)]),
+    zipcode: new FormControl('',[Validators.required, Validators.minLength(5), Validators.pattern("^[0-9]*$")]),
+    cellphone: new FormControl('', [Validators.minLength(10), Validators.pattern("^[0-9]*$")]),
+    homephone: new FormControl('',[Validators.minLength(10),Validators.pattern("^[0-9]*$")]),
     joiningDate: new FormControl('', Validators.required),
     department: new FormControl('',Validators.required),
-    baseSalary: new FormControl('', Validators.required),
+    baseSalary: new FormControl('', [Validators.required,Validators.pattern("^[0-9]*$")]),
     taxPercent: new FormControl('20'),
     deductions: new FormControl('')
 
@@ -62,6 +64,10 @@ export class AddEmployeeComponent implements OnInit {
   allUsernames = []
   usernameError: boolean;
   employeeId
+  selectAllDeductions = false;
+  header
+  myDepartment
+
   constructor(
     private empService: EmployeeService, 
     private departmentService: DepartmentService, 
@@ -78,8 +84,9 @@ export class AddEmployeeComponent implements OnInit {
       {
         this.empService.viewEmployee(params["id"]).subscribe(res => {
           this.employee = res;
+          this.myDepartment = this.employee.department;
           this.employeeId = params["id"];
-
+          this.header = "UPDATE"
           this.form = new FormGroup({
 
             username: new FormControl(this.employee.username,[
@@ -87,18 +94,18 @@ export class AddEmployeeComponent implements OnInit {
               Validators.email,
         
             ]),
-            firstName: new FormControl(this.employee.firstName,Validators.required),
-            lastName: new FormControl(this.employee.lastName,Validators.required),
-            street: new FormControl(this.employee.address.street,Validators.required),
+            firstName: new FormControl(this.employee.firstName,[Validators.required,Validators.pattern('^[a-zA-Z ]*$'), Validators.minLength(3)]),
+            lastName: new FormControl(this.employee.lastName,[Validators.required, Validators.pattern('^[a-zA-Z ]*$'), Validators.minLength(3)]),
+            street: new FormControl(this.employee.address.street,[Validators.required, Validators.minLength(3)]),
             apt: new FormControl(this.employee.address.apt),
-            city: new FormControl(this.employee.address.city,Validators.required),
-            state: new FormControl(this.employee.address.state,Validators.required),
-            zipcode: new FormControl(this.employee.address.zipcode,Validators.required),
-            cellphone: new FormControl(this.employee.contact.cellphone),
-            homephone: new FormControl(this.employee.contact.home),
+            city: new FormControl(this.employee.address.city,[Validators.required, Validators.pattern('^[a-zA-Z ]*$'), Validators.minLength(3)]),
+            state: new FormControl(this.employee.address.state,[Validators.required, Validators.pattern('^[a-zA-Z ]*$'),Validators.minLength(2)]),
+            zipcode: new FormControl(this.employee.address.zipcode,[Validators.required, Validators.minLength(5), Validators.pattern("^[0-9]*$")]),
+            cellphone: new FormControl(this.employee.contact.cellphone,[Validators.minLength(10), Validators.pattern("^[0-9]*$")]),
+            homephone: new FormControl(this.employee.contact.home,[Validators.minLength(10), Validators.pattern("^[0-9]*$")]),
             joiningDate: new FormControl(this.employee.joiningDate, Validators.required),
-            department: new FormControl('',Validators.required),
-            baseSalary: new FormControl(this.employee.salary.baseSalary, Validators.required),
+            department: new FormControl([this.myDepartment],Validators.required),
+            baseSalary: new FormControl(this.employee.salary.baseSalary, [Validators.required, Validators.pattern("^[0-9]*$")]),
             taxPercent: new FormControl('20'),
             deductions: new FormControl('')
         
@@ -106,6 +113,8 @@ export class AddEmployeeComponent implements OnInit {
         })
       }
     })
+
+    this.header = "ADD";
     this.getAllDepartments();
 
     this.getAllDeductions();
@@ -117,8 +126,7 @@ export class AddEmployeeComponent implements OnInit {
   {
 
     this.departmentService.getAllDepartments().subscribe(department => {
-      console.log("Departments = ");
-      console.log(department);
+     
 
       for(let i = 0; i < department.length; i++)
       {
@@ -132,8 +140,7 @@ export class AddEmployeeComponent implements OnInit {
   {
 
     this.salaryService.getAllDeductions().subscribe(deduction => {
-      console.log("Deductions = ");
-      console.log(deduction[0].deductions);
+      
       let allDeductions = deduction[0].deductions;
       for(let i = 0; i < allDeductions.length; i++)
       {
@@ -145,26 +152,19 @@ export class AddEmployeeComponent implements OnInit {
 
   getAllUsernames(){
 
-    this.empService.getAllUsernames().subscribe(unm => {
-
-      console.log("All Usernames = ");
-      console.log(unm);
-      //this.allUsernames = unm.slice();
+      this.empService.getAllUsernames().subscribe(unm => {
       for(let i = 0; i < unm.length; i++)
       {
         this.allUsernames.push(unm[i].username);
       }
-      console.log("Username array = ");
-      console.log(this.allUsernames);
+      
     });
   }
 
   checkUsername(username){
-
-    console.log("Entered username = "+username.value);
     if(this.allUsernames.includes(username.value))
     {
-      console.log("Similar found");
+      
       this.usernameError = true;
     }
   }
@@ -188,12 +188,9 @@ export class AddEmployeeComponent implements OnInit {
 
   addEmployee(empId,f){
     
-    console.log("Employee ID = ");
-    console.log(empId);
     if(empId !== undefined)
     {
-      console.log("updating");
-      console.log(f.value);
+      
       let employeeToBeUpdated = 
         {
     
@@ -226,9 +223,7 @@ export class AddEmployeeComponent implements OnInit {
             takeHomeSalary: this.takeHomeSalary
           }
         }
-      this.empService.updateEmployee(employeeToBeUpdated, empId).subscribe(updatedEmployee => {
-        console.log("Updated Employee Details = ");
-        console.log(updatedEmployee);
+        this.empService.updateEmployee(employeeToBeUpdated, empId).subscribe(updatedEmployee => {
         this.router.navigateByUrl("/home");
       });
     }
@@ -384,6 +379,38 @@ export class AddEmployeeComponent implements OnInit {
 
     this.takeHomeSalary = baseSalary.value - salaryAfterTax;
 
+  }
+
+  selectAll(baseSalary, taxPercent)
+  {
+    console.log("Base Salary = "+baseSalary.value);
+    console.log("Tax Percent = "+taxPercent.value);
+    
+
+    
+    if(this.selectAllDeductions)
+    {
+      this.takeHomeSalary = baseSalary.value;
+      this.selectAllDeductions = false;
+      
+      
+    }
+    else
+    {
+      
+      let totalDeductionCost = 0;
+      for(let i = 0; i < this.mydeductions.length; i++)
+      {
+        totalDeductionCost += this.mydeductions[i].rate;
+      }
+
+      let totalTaxSalary = (taxPercent.value/100) * baseSalary.value;
+      let salaryAfterTax = baseSalary.value - totalTaxSalary;
+    
+      this.takeHomeSalary = salaryAfterTax - totalDeductionCost;
+      this.selectAllDeductions = true;
+    }
+    console.log("Select All Clicked");
   }
 
   

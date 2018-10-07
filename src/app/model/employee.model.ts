@@ -12,7 +12,7 @@ export interface Employee
         cellphone: String,
         home: String
     },
-    JoiningDate: Date,
+    joiningDate: Date,
     address: {
         street: String,
         apt: String,
@@ -20,7 +20,10 @@ export interface Employee
         state: String,
         zipcode: String
     },
-    department : Object,
+    department : {
+        departmentID: Number,
+        departmentName: String
+    },
     salary: {
 
         baseSalary: Number,

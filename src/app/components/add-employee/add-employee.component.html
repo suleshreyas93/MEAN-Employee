@@ -1,7 +1,7 @@
 
 <div class="card mat-elevation-z8">
       <div class="card-header">
-        <h5 class="my-card-header-title">ADD EMPLOYEE DETAILS</h5>
+        <h5 class="my-card-header-title">{{header}} EMPLOYEE DETAILS</h5>
       </div>
       <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="addEmployee(employeeId,form)">
@@ -41,6 +41,8 @@
                       placeholder="First name">
                       <div class="alert alert-danger" *ngIf="form.get('firstName').touched && form.get('firstName').invalid">
                           <div *ngIf="form.get('firstName').errors.required">Please Enter First Name</div>
+                          <div *ngIf="form.get('firstName').errors.pattern">First Name Entered Not Valid</div>
+                          <div *ngIf="form.get('firstName').errors.minlength">First Name Should be minimum of {{form.get('firstName').errors.minlength.requiredLength}} characters</div>
                       </div>
                   </mat-form-field>
                   
@@ -53,6 +55,8 @@
                       placeholder="Last Name">
                       <div class="alert alert-danger" *ngIf="form.get('lastName').touched && form.get('lastName').invalid">
                           <div *ngIf="form.get('lastName').errors.required">Please Enter Last Name</div>
+                          <div *ngIf="form.get('lastName').errors.pattern">Last Name Entered Not Valid</div>
+                          <div *ngIf="form.get('lastName').errors.minlength">Last Name Should be minimum of {{form.get('lastName').errors.minlength.requiredLength}} characters</div>
                       </div>
                   </mat-form-field>
                   
@@ -66,6 +70,7 @@
                       placeholder="Street">
                       <div class="alert alert-danger" *ngIf="form.get('street').touched && form.get('street').invalid">
                           <div *ngIf="form.get('street').errors.required">Please Enter The Street</div>
+                          <div *ngIf="form.get('street').errors.minlength">Street Should be minimum of {{form.get('street').errors.minlength.requiredLength}} characterss</div>
                       </div>
                   </mat-form-field>
                   <mat-form-field>
@@ -84,6 +89,9 @@
                       placeholder="City">
                       <div class="alert alert-danger" *ngIf="form.get('city').touched && form.get('city').invalid">
                           <div *ngIf="form.get('city').errors.required">Please Enter The City</div>
+                          <div *ngIf="form.get('city').errors.pattern">City Entered Not Valid</div>
+                          <div *ngIf="form.get('city').errors.minlength">City should be minimum of {{form.get('city').errors.minlength.requiredLength}}</div>
+                          
                       </div>
                   </mat-form-field>
   
@@ -95,6 +103,8 @@
                       placeholder="State">
                       <div class="alert alert-danger" *ngIf="form.get('state').touched && form.get('state').invalid">
                           <div *ngIf="form.get('state').errors.required">Please Enter The State</div>
+                          <div *ngIf="form.get('state').errors.pattern">State Entered Not Valid</div>
+                          <div *ngIf="form.get('state').errors.minlength">State should be minimum of {{form.get('state').errors.minlength.requiredLength}}</div>
                       </div>
                   </mat-form-field>
   
@@ -102,10 +112,12 @@
                      <input
                      formControlName="zipcode" 
                       matInput 
-                      type="text" 
+                      type="number" 
                       placeholder="zipcode">
                       <div class="alert alert-danger" *ngIf="form.get('zipcode').touched && form.get('zipcode').invalid">
                           <div *ngIf="form.get('zipcode').errors.required">Please Enter The Zipcode</div>
+                          <div *ngIf="form.get('zipcode').errors.pattern">Zipcode not valid</div>
+                          <div *ngIf="form.get('zipcode').errors.minlength">Zipcode should be minimum of {{form.get('zipcode').errors.minlength.requiredLength}}</div>
                       </div>
                   </mat-form-field><br>
   
@@ -113,16 +125,26 @@
                       <input
                         formControlName="cellphone"
                         matInput 
-                        type="text" 
+                        type="number" 
                         placeholder="CellPhone Number">
+                        <div class="alert alert-danger" *ngIf="form.get('cellphone').touched && form.get('cellphone').invalid">
+                          <div *ngIf="form.get('cellphone').errors.pattern">Phone number not valid</div>
+                          <div *ngIf="form.get('cellphone').errors.minlength">Phone Number Should be Minimum of {{form.get('cellphone').errors.minlength.requiredLength}} digits</div>
+
+                        </div>
                   </mat-form-field>
   
                   <mat-form-field>
                       <input 
                         formControlName="homephone" 
                         matInput 
-                        type="text" 
+                        type="number" 
                         placeholder="Home Number">
+                        <div class="alert alert-danger" *ngIf="form.get('homephone').touched && form.get('homephone').invalid">
+                            <div *ngIf="form.get('homephone').errors.pattern">Phone number not valid</div>
+                            <div *ngIf="form.get('homephone').errors.minlength">Phone Number Should be Minimum of {{form.get('homephone').errors.minlength.requiredLength}} digits</div>
+  
+                          </div>
                   </mat-form-field><br>
   
                   <mat-form-field>
@@ -165,7 +187,8 @@
                       <mat-select  
                         formControlName="department"
                         placeholder="Departments" 
-                        (change)="selectedDepartment($event.value)">
+                        (change)="selectedDepartment($event.value)"
+                        >
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let dept of departments" [value]="dept">
                           {{dept.departmentName}}
@@ -200,12 +223,13 @@
                     <input
                       formControlName="baseSalary" 
                       matInput 
-                      type="text" 
+                      type="number" 
                       placeholder="Base Salary"
                       (blur)="homeSalary(form.get('baseSalary'), form.get('taxPercent'))">
 
                       <div class="alert alert-danger" *ngIf="form.get('baseSalary').touched && form.get('baseSalary').invalid">
                           <div *ngIf="form.get('baseSalary').errors.required">Please Enter Base Salary</div>
+                          <div *ngIf="form.get('baseSalary').errors.pattern">Salary Not Valid</div>
                       </div>
                   </mat-form-field>
   
@@ -222,10 +246,11 @@
                   <label>Deductions</label>
                   <mat-selection-list 
                     formControlName="deductions">
-                    <mat-list-option>Select All</mat-list-option><hr>
+                    <mat-list-option  (click)="selectAll(form.get('baseSalary'), form.get('taxPercent'))">Select All</mat-list-option><hr>
                     <mat-list-option 
                       *ngFor="let deduction of mydeductions" 
-                      [selected]="deduction.selected" 
+                      [selected]="selectAllDeductions "
+                      
                       (click)="selectedDeductions(form.get('deductions'), form.get('baseSalary'), form.get('taxPercent'))" 
                       [value]="deduction">
                       {{deduction.type}}
@@ -240,7 +265,7 @@
               
                   <mat-action-row>
                     <button mat-button color="warn" (click)="prevStep($event)">Previous</button>
-                    <button mat-button color="primary"> End </button>
+                    <button mat-button color="primary"> Save </button>
                   </mat-action-row>
             </mat-expansion-panel>
         </mat-accordion>

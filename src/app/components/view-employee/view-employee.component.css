@@ -12,6 +12,7 @@
     margin: auto; 
     width: 50%;
     text-align: center;
+    
 
     /* justify-content: space-around; */
 }
@@ -26,10 +27,18 @@ ul li{
 }
 
 .gaps{
-    line-height: 0.1
+    line-height: 0.1;
+    display: inline-flex;
+    vertical-align: middle;
 }
 
 .gap-address{
     line-height: 0.5;
 }
+
+/*.icon-class{
+
+    display: flex;
+    align-items: center;
+}*/
 

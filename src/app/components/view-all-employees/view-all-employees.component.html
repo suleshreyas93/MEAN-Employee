@@ -1,5 +1,7 @@
-
-<div class="container">
+<div *ngIf="flag" class="message">
+    <h4>{{message}}</h4>
+</div>
+<div class="container" *ngIf="!flag">
   
   <div class="table">
         <mat-form-field>

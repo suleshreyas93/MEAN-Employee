@@ -1,6 +1,6 @@
 <div class="card mat-elevation-z8">
   <div class="card-header">
-      <h5 class="my-card-header-title">VIEW {{employee.firstName | uppercase }} DETAILS</h5>
+      <h5 class="my-card-header-title">VIEW {{firstName | uppercase }} DETAILS</h5>
   </div>
   <div class="card-body">
       <div class="row">
@@ -16,38 +16,40 @@
       <hr>
 
       <div class="row ">
-          <div class="col-md-12 base-salary">
-                <span><mat-icon>account_circle</mat-icon><h5 class="gaps">Personal Details</h5></span>
+          <div class="col-md-12  base-salary">
+            
+                <h5 class="gap">Personal Details</h5>
+            
           </div>
-      </div>
+      </div><br>
       <div class="row">
         <div class="col-md-4 base-salary">
             <p>Username</p>
-            <h5 class="gaps">{{employee.username}}</h5>
+            <h5 class="gaps">{{username}}</h5>
         </div>
         <div class="col-md-4 base-salary">
             <p>First Name</p>
-            <h5 class="gaps">{{employee.firstName}}</h5>
+            <h5 class="gaps">{{firstName}}</h5>
         </div>
         <div class="col-md-4 base-salary">
             <p>Last Name</p>
-            <h5 class="gaps">{{employee.lastName}}</h5>
+            <h5 class="gaps">{{lastName}}</h5>
         </div>
       </div><br>
       <div class="row">
         <div class="col-md-4 base-salary">
             <p>Address</p>
-            <h5 class="gap-address">{{employee.address.street}} {{employee.address.apt}}</h5>
-            <h5 class="gap-address">{{employee.address.city}} {{employee.address.state}}</h5>
-            <h5 class="gap-address">{{employee.address.zipcode}}</h5>
+            <h6 class="gap-address">{{street}} {{apt}}</h6>
+            <h6 class="gap-address">{{city}} {{state}}</h6>
+            <h6 class="gap-address">{{zipcode}}</h6>
         </div>
         <div class="col-md-4 base-salary">
             <p>Cellphone</p>
-            <h5 class="gaps">{{employee.contact.cellphone}}</h5>
+            <h5 class="gaps">{{cellphone}}</h5>
         </div>
         <div class="col-md-4 base-salary">
             <p>Home Phone</p>
-            <h5 class="gaps">{{employee.contact.home}}</h5>
+            <h5 class="gaps">{{home}}</h5>
         </div>
         <!-- <div class="col-md-2 base-salary">
             <p>State</p>
@@ -67,11 +69,11 @@
       <div class="row">
         <div class="col-md-6 base-salary">
             <p>Joining Date</p>
-            <h5 class="gaps">{{employee.joiningDate | date:'shortDate' }}</h5>
+            <h5 class="gaps">{{joining_date | date:'shortDate' }}</h5>
         </div>
         <div class="col-md-6 base-salary">
             <p>Department</p>
-            <h5 class="gaps">{{employee.department.departmentName}}</h5>
+            <h5 class="gaps">{{department}}</h5>
         </div>
       </div>
       <hr>
@@ -83,15 +85,20 @@
       <div class="row">
         <div class="col-md-4 base-salary">
             <p>Deductions</p>
-            <ul class="base-salary">
-                <li *ngFor="let deduction of employee.salary.deductions">
-                    <p>Type: {{deduction.type}}   Rate: {{deduction.rate}}</p>
+            <div *ngIf="flag">
+                <h5>{{message}}</h5>
+            </div>
+            <ul class="base-salary" *ngIf="!flag">
+                
+                <li *ngFor="let deduction of deductions">
+                    <p class="gap">Type: {{deduction.type}}</p>
+                    <p class="gap">Rate: {{deduction.rate}}</p>
                 </li>
             </ul>
         </div>
         <div class="col-md-4 base-salary">
             <p>Tax Percent</p>
-            <h5 class="gaps">{{employee.salary.taxPercent}}</h5>
+            <h5 class="gaps">{{taxPercent}}</h5>
         </div>
       </div>
       <hr>

@@ -21,6 +21,9 @@ export class ViewAllEmployeesComponent implements OnInit {
 
   @Input("data-source") dataSource = new MatTableDataSource();
   @Input("columns") displayedColumns = ["_id","username","firstName","lastName","contact","department","baseSalary","takeHomeSalary"];
+
+  message
+  flag: boolean
   constructor(private empService: EmployeeService, private router: Router) { }
 
   ngOnInit() {
@@ -37,8 +40,18 @@ export class ViewAllEmployeesComponent implements OnInit {
 
       console.log("Columns = ");
       console.log(this.displayedColumns);*/
+      if(employees.length > 0)
+      {
+        this.dataSource.data = employees;
+        this.flag = false;
+      }
+      else
+      {
+        this.flag = true;
+        this.message = "NO EMPLOYEES ADDED YET! PLEASE ADD SOME EMPLOYEES!";
+      }
 
-      this.dataSource.data = employees;
+      
     });
   }
 

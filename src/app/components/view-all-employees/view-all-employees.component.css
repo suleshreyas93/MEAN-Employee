@@ -45,3 +45,9 @@ mat-row:nth-child(odd){
 
     cursor: pointer;
 }
+
+.message{
+    margin: auto; 
+    width: 50%;
+    text-align: center;
+}
