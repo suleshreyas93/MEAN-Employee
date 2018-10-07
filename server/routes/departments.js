@@ -5,7 +5,7 @@ const router = express.Router();
 router.get("/",async(req,res) => {
 
     let allDepartments = await department.getAllDepartments();
-    console.log("Departments = "+allDepartments);
+    
     res.json(allDepartments);
 });
 

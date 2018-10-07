@@ -229,9 +229,6 @@ export class AddEmployeeComponent implements OnInit {
     }
     else
     {
-      console.log("f = ");
-      console.log(f);
-  
       if(f.invalid)
       {
         this.error = true;
@@ -240,7 +237,7 @@ export class AddEmployeeComponent implements OnInit {
       }
       else
       {
-        console.log(f.value.taxPercent);
+        
         let newEmployee = 
         {
     
@@ -281,27 +278,15 @@ export class AddEmployeeComponent implements OnInit {
     
 }
         
+selectedDepartment(department)
+{
+   this.department = department;
+}
 
-
-  selectedDepartment(department){
-      console.log("Selected Department = ");
-      console.log(department);
-      this.department = department;
-  }
-
-  selectedDeductions(list, baseSalary, taxPercent){
-    console.log("List = ");
-    console.log(list);
-    //this.selectedOptions = list.value.map(item => item.value);
+selectedDeductions(list, baseSalary, taxPercent)
+{
+    
     this.selectedOptions = list.value.slice();
-    console.log("Selected Deductions = ");
-    console.log(this.selectedOptions);
-
-    console.log("Base Salary = "+baseSalary.value);
-    console.log("Tax Percent = "+taxPercent.value);
-    console.log("Deductions = ");
-    console.log(this.selectedOptions)
-
     let base = baseSalary.value;
     this.tax = taxPercent.value;
     let totalDeductionCost = 0;
@@ -318,34 +303,23 @@ export class AddEmployeeComponent implements OnInit {
         totalDeductionCost += this.selectedOptions[i].rate;
       }
     }
-    
-
-    
-    console.log("Total Deduction Cost = "+totalDeductionCost);
-
-    
-    
     let totalTaxSalary = (this.tax/100) * base;
     let salaryAfterTax = base - totalTaxSalary;
     
     this.takeHomeSalary = salaryAfterTax - totalDeductionCost;
     
-    console.log(this.takeHomeSalary);
+    
   }
 
-  joiningDate(date){
-
-    console.log("Date = ");
-    console.log(date);
+  joiningDate(date)
+  {
     this.joining_date = date.value;
     this.joining_date = this.joiningDatePipe.transform(this.joining_date);
-    console.log(this.joining_date);
+    
   }
 
-  confirmDialog(error){
-
-    console.log("New Employee = ");
-    //console.log(employee);
+  confirmDialog(error)
+  {
     let dialogRef = this.dialog.open(ConformdialogComponent, {
       width: '600px',
       data: this.error
@@ -359,41 +333,28 @@ export class AddEmployeeComponent implements OnInit {
 
   confirmEmployee(employee){
 
-    this.empService.addNewEmployee(employee).subscribe(emp => {
-      console.log("Inserted employee = ");
-      console.log(emp);
+      this.empService.addNewEmployee(employee).subscribe(emp => {
       this.insertedId = emp;
-
-      console.log("Inserted ID = ");
-      console.log(this.insertedId._id);
       this.router.navigate(["/employees/view-employee",this.insertedId._id]);
     });
   }
 
-  homeSalary(baseSalary, taxPercent){
+  homeSalary(baseSalary, taxPercent)
+  {
 
     this.tax = taxPercent.value;
-    console.log("baseSalary = "+baseSalary.value);
-    console.log("Tax = "+taxPercent.value);
     let salaryAfterTax = (this.tax / 100) * baseSalary.value;
-
     this.takeHomeSalary = baseSalary.value - salaryAfterTax;
 
   }
 
   selectAll(baseSalary, taxPercent)
   {
-    console.log("Base Salary = "+baseSalary.value);
-    console.log("Tax Percent = "+taxPercent.value);
-    
-
     
     if(this.selectAllDeductions)
     {
       this.takeHomeSalary = baseSalary.value;
       this.selectAllDeductions = false;
-      
-      
     }
     else
     {
@@ -410,7 +371,7 @@ export class AddEmployeeComponent implements OnInit {
       this.takeHomeSalary = salaryAfterTax - totalDeductionCost;
       this.selectAllDeductions = true;
     }
-    console.log("Select All Clicked");
+    
   }
 
   

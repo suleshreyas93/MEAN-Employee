@@ -1,10 +1,6 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-
-
-
-
 import { EmployeeService } from './../../services/employee.service';
 import { Employee } from './../../model/employee.model';
 
@@ -29,17 +25,6 @@ export class ViewAllEmployeesComponent implements OnInit {
   ngOnInit() {
 
     this.empService.getAllEmployees().subscribe(employees => {
-      console.log(employees);
-
-      /*let coulmnNames = Object.keys(employees[0]);
-
-      for(let i = 0; i < coulmnNames.length; i++)
-      {
-        this.displayedColumns.push(coulmnNames[i]);
-      }
-
-      console.log("Columns = ");
-      console.log(this.displayedColumns);*/
       if(employees.length > 0)
       {
         this.dataSource.data = employees;
@@ -66,12 +51,9 @@ export class ViewAllEmployeesComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  rowClicked(row: any){
-    console.log(row);
-
+  rowClicked(row: any)
+  {
     this.router.navigate(["/employees/view-employee",row._id]);
-
-
   }
 
 }

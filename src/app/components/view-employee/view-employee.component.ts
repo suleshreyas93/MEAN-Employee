@@ -35,23 +35,17 @@ export class ViewEmployeeComponent implements OnInit {
   constructor(private empService: EmployeeService, private router: Router, private aR: ActivatedRoute) { }
   employeeId
   ngOnInit() {
-
-
-    
-    this.aR.params.subscribe(params => {
+      this.aR.params.subscribe(params => {
       this.employeeId = params["_id"];
-      console.log("In view = "+this.employeeId);
+      
     });
 
     this.empService.viewEmployee(this.employeeId).subscribe(emp => {
-      console.log("Employee = ");
-      console.log(emp);
+      
 
       this.employee = emp;
-      console.log("Joining Date = ");
-      console.log(this.employee.joiningDate);
-      //this.joining_date = this.employee.joiningDate;
-      //this.joining_date = this.joiningDatePipe.transform(this.joining_date);
+      
+      
       this.baseSalary = this.employee.salary.baseSalary;
       this.takeHomeSalary = this.employee.salary.takeHomeSalary;
       this.firstName = this.employee.firstName;
@@ -66,8 +60,7 @@ export class ViewEmployeeComponent implements OnInit {
       this.homephone = this.employee.contact.home;
       this.taxPercent = this.employee.salary.taxPercent;
       this.department = this.employee.department.departmentName;
-      console.log("Department = ");
-      console.log(this.employee.department);
+      
 
 
         if(this.employee.salary.deductions.length > 0)
@@ -80,11 +73,7 @@ export class ViewEmployeeComponent implements OnInit {
           this.flag = true;
           this.message = "NO DEDUCTIONS SELECTED!";
         }
-        
-     
-      
-
-    });
+      });
   }
 
   callUpdate()

@@ -7,8 +7,7 @@ router.get("/", async(req, res) => {
     try
     {
         let allEmployees = await Employee.getAllEmployees();
-        console.log("All Employees : "+allEmployees);
-        res.json(allEmployees);
+       res.json(allEmployees);
     }
     catch(e)
     {
@@ -35,8 +34,7 @@ router.post("/add",async(req,res) => {
         }
     
         let employee = await Employee.addNewEmployee(newEmployee);
-        console.log("New Employee = ");
-        console.log(employee);
+       
         res.json(employee);
     }
     catch(e)
@@ -51,7 +49,7 @@ router.get("/view-employee/:id",async(req, res) => {
     try
     {
         let employee = await Employee.getemployeeWithID(req.params.id);
-        console.log(employee);
+        
         res.json(employee);
     }
     catch(e)
@@ -64,7 +62,7 @@ router.get("/view-employee/:id",async(req, res) => {
 
 router.post("/update/:id",async(req,res) => {
 
-    //let employeeToBeUpdated = await Employee.getemployeeWithID(req.params.id);
+   
 
     try
     {
@@ -82,8 +80,7 @@ router.post("/update/:id",async(req,res) => {
         }
     
         let updatedEmployee = await Employee.updateEmployee(req.params.id, employeeToBeUpdated);
-        console.log("Updated Employee Result = ");
-        console.log(updatedEmployee);
+        
         res.json(updatedEmployee);
     }
     catch(e)
@@ -97,8 +94,7 @@ router.get("/usernames",async(req,res) => {
     try
     {
         let allUsernames = await Employee.getAllUsernames();
-        console.log("All Usernames = ");
-        console.log(allUsernames);
+        
         res.json(allUsernames);
     }
     catch(e)

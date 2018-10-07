@@ -31,7 +31,7 @@ const employeeSchema = mongoose.Schema({
 });
 
 const Employee = mongoose.model("employees",employeeSchema);
-//console.log(Employee);
+
 
 module.exports = {
 
@@ -43,7 +43,7 @@ module.exports = {
 
     async addNewEmployee(employee){
 
-        console.log("New Employee = "+employee.username+" "+employee.firstName+" "+employee.lastName);
+        
         let newEmployee = new Employee(employee);
         return await newEmployee.save({});
     },
@@ -55,9 +55,7 @@ module.exports = {
 
     async updateEmployee(id, employee)
     {
-        console.log("Employee ID = "+id);
-        console.log("Updated Employee = ");
-        console.log(employee);
+        
         return await Employee.updateOne({_id: id},{$set: employee});
     },
 
