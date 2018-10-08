@@ -539,6 +539,7 @@ var AddEmployeeComponent = /** @class */ (function () {
         }
         else {
             var totalDeductionCost = 0;
+            this.selectedOptions = this.mydeductions.slice(); // includes all deductions
             for (var i = 0; i < this.mydeductions.length; i++) {
                 totalDeductionCost += this.mydeductions[i].rate;
             }

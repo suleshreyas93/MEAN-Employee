@@ -361,6 +361,7 @@ selectedDeductions(list, baseSalary, taxPercent)
     {
       
       let totalDeductionCost = 0;
+      this.selectedOptions = this.mydeductions.slice(); // includes all deductions
       for(let i = 0; i < this.mydeductions.length; i++)
       {
         totalDeductionCost += this.mydeductions[i].rate;
