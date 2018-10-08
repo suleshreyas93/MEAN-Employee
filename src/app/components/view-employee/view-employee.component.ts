@@ -60,6 +60,7 @@ export class ViewEmployeeComponent implements OnInit {
       this.homephone = this.employee.contact.home;
       this.taxPercent = this.employee.salary.taxPercent;
       this.department = this.employee.department.departmentName;
+      this.joining_date = this.employee.joiningDate;
       
 
 

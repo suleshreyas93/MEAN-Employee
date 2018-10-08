@@ -84,6 +84,7 @@ export class AddEmployeeComponent implements OnInit {
       {
         this.empService.viewEmployee(params["id"]).subscribe(res => {
           this.employee = res;
+          this.joining_date = this.employee.joiningDate
           this.myDepartment = this.employee.department;
           this.employeeId = params["id"];
           this.header = "UPDATE"

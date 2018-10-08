@@ -347,6 +347,7 @@ var AddEmployeeComponent = /** @class */ (function () {
             if (params["id"]) {
                 _this.empService.viewEmployee(params["id"]).subscribe(function (res) {
                     _this.employee = res;
+                    _this.joining_date = _this.employee.joiningDate;
                     _this.myDepartment = _this.employee.department;
                     _this.employeeId = params["id"];
                     _this.header = "UPDATE";
@@ -451,14 +452,11 @@ var AddEmployeeComponent = /** @class */ (function () {
             });
         }
         else {
-            console.log("f = ");
-            console.log(f);
             if (f.invalid) {
                 this.error = true;
                 this.confirmDialog(this.error);
             }
             else {
-                console.log(f.value.taxPercent);
                 var newEmployee = {
                     username: f.value.username,
                     firstName: f.value.firstName,
@@ -488,21 +486,10 @@ var AddEmployeeComponent = /** @class */ (function () {
         }
     };
     AddEmployeeComponent.prototype.selectedDepartment = function (department) {
-        console.log("Selected Department = ");
-        console.log(department);
         this.department = department;
     };
     AddEmployeeComponent.prototype.selectedDeductions = function (list, baseSalary, taxPercent) {
-        console.log("List = ");
-        console.log(list);
-        //this.selectedOptions = list.value.map(item => item.value);
         this.selectedOptions = list.value.slice();
-        console.log("Selected Deductions = ");
-        console.log(this.selectedOptions);
-        console.log("Base Salary = " + baseSalary.value);
-        console.log("Tax Percent = " + taxPercent.value);
-        console.log("Deductions = ");
-        console.log(this.selectedOptions);
         var base = baseSalary.value;
         this.tax = taxPercent.value;
         var totalDeductionCost = 0;
@@ -514,23 +501,16 @@ var AddEmployeeComponent = /** @class */ (function () {
                 totalDeductionCost += this.selectedOptions[i].rate;
             }
         }
-        console.log("Total Deduction Cost = " + totalDeductionCost);
         var totalTaxSalary = (this.tax / 100) * base;
         var salaryAfterTax = base - totalTaxSalary;
         this.takeHomeSalary = salaryAfterTax - totalDeductionCost;
-        console.log(this.takeHomeSalary);
     };
     AddEmployeeComponent.prototype.joiningDate = function (date) {
-        console.log("Date = ");
-        console.log(date);
         this.joining_date = date.value;
         this.joining_date = this.joiningDatePipe.transform(this.joining_date);
-        console.log(this.joining_date);
     };
     AddEmployeeComponent.prototype.confirmDialog = function (error) {
         var _this = this;
-        console.log("New Employee = ");
-        //console.log(employee);
         var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_0__conformdialog_conformdialog_component__["a" /* ConformdialogComponent */], {
             width: '600px',
             data: this.error
@@ -543,24 +523,16 @@ var AddEmployeeComponent = /** @class */ (function () {
     AddEmployeeComponent.prototype.confirmEmployee = function (employee) {
         var _this = this;
         this.empService.addNewEmployee(employee).subscribe(function (emp) {
-            console.log("Inserted employee = ");
-            console.log(emp);
             _this.insertedId = emp;
-            console.log("Inserted ID = ");
-            console.log(_this.insertedId._id);
             _this.router.navigate(["/employees/view-employee", _this.insertedId._id]);
         });
     };
     AddEmployeeComponent.prototype.homeSalary = function (baseSalary, taxPercent) {
         this.tax = taxPercent.value;
-        console.log("baseSalary = " + baseSalary.value);
-        console.log("Tax = " + taxPercent.value);
         var salaryAfterTax = (this.tax / 100) * baseSalary.value;
         this.takeHomeSalary = baseSalary.value - salaryAfterTax;
     };
     AddEmployeeComponent.prototype.selectAll = function (baseSalary, taxPercent) {
-        console.log("Base Salary = " + baseSalary.value);
-        console.log("Tax Percent = " + taxPercent.value);
         if (this.selectAllDeductions) {
             this.takeHomeSalary = baseSalary.value;
             this.selectAllDeductions = false;
@@ -575,7 +547,6 @@ var AddEmployeeComponent = /** @class */ (function () {
             this.takeHomeSalary = salaryAfterTax - totalDeductionCost;
             this.selectAllDeductions = true;
         }
-        console.log("Select All Clicked");
     };
     AddEmployeeComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["n" /* Component */])({
@@ -733,16 +704,6 @@ var ViewAllEmployeesComponent = /** @class */ (function () {
     ViewAllEmployeesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.empService.getAllEmployees().subscribe(function (employees) {
-            console.log(employees);
-            /*let coulmnNames = Object.keys(employees[0]);
-      
-            for(let i = 0; i < coulmnNames.length; i++)
-            {
-              this.displayedColumns.push(coulmnNames[i]);
-            }
-      
-            console.log("Columns = ");
-            console.log(this.displayedColumns);*/
             if (employees.length > 0) {
                 _this.dataSource.data = employees;
                 _this.flag = false;
@@ -763,7 +724,6 @@ var ViewAllEmployeesComponent = /** @class */ (function () {
         this.dataSource.filter = filterValue;
     };
     ViewAllEmployeesComponent.prototype.rowClicked = function (row) {
-        console.log(row);
         this.router.navigate(["/employees/view-employee", row._id]);
     };
     __decorate([
@@ -852,16 +812,9 @@ var ViewEmployeeComponent = /** @class */ (function () {
         var _this = this;
         this.aR.params.subscribe(function (params) {
             _this.employeeId = params["_id"];
-            console.log("In view = " + _this.employeeId);
         });
         this.empService.viewEmployee(this.employeeId).subscribe(function (emp) {
-            console.log("Employee = ");
-            console.log(emp);
             _this.employee = emp;
-            console.log("Joining Date = ");
-            console.log(_this.employee.joiningDate);
-            //this.joining_date = this.employee.joiningDate;
-            //this.joining_date = this.joiningDatePipe.transform(this.joining_date);
             _this.baseSalary = _this.employee.salary.baseSalary;
             _this.takeHomeSalary = _this.employee.salary.takeHomeSalary;
             _this.firstName = _this.employee.firstName;
@@ -876,8 +829,7 @@ var ViewEmployeeComponent = /** @class */ (function () {
             _this.homephone = _this.employee.contact.home;
             _this.taxPercent = _this.employee.salary.taxPercent;
             _this.department = _this.employee.department.departmentName;
-            console.log("Department = ");
-            console.log(_this.employee.department);
+            _this.joining_date = _this.employee.joiningDate;
             if (_this.employee.salary.deductions.length > 0) {
                 _this.deductions = _this.employee.salary.deductions.slice();
                 _this.flag = false;
